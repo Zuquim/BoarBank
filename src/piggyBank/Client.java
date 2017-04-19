@@ -1,4 +1,4 @@
-package bankOps;
+package piggyBank;
 
 public class Client implements Comparable<Client> {
 	private String accountOwner;
