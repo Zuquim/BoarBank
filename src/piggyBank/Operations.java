@@ -1,4 +1,4 @@
-package bankOps;
+package piggyBank;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -12,14 +12,17 @@ public class Operations {
 
 	public static int counter = 0;
 	private static int AN_MAX_LENGTH = 5;
+	public static Scanner input = new Scanner(System.in);
 
 	public static void main(String[] args) throws IOException {
-		Scanner input = new Scanner(System.in);
+
 		boolean quit = false;
 
 		ArrayList<Client> accountArray = new ArrayList<Client>();
 
-		FileReader fr = new FileReader("acc.txt");
+		welcomeBanner();
+
+		FileReader fr = new FileReader(inputFileName());
 		BufferedReader br = new BufferedReader(fr);
 		LineNumberReader lnr = new LineNumberReader(fr);
 
@@ -48,14 +51,14 @@ public class Operations {
 			line = br.readLine();
 			j++;
 		}
-		welcomeBanner();
+		System.out.println("\n\tAccounts imported successfully!\n");
 		do {
 			boolean main = false;
 			mainMenu();
 			int mainMenuOption = input.nextInt();
 			switch (mainMenuOption) {
 			case 1:
-				System.out.println("\n\n" + accountArray.toString() + "\n\n");
+				System.out.println("\n\n" + accountArray.toString() + "\n");
 				break;
 			case 2:
 				Collections.sort(accountArray);
@@ -135,7 +138,7 @@ public class Operations {
 			return 0;
 
 	}
-	
+
 	private static Double formatCurrency(String inputCurrency) {
 		String outputCurrency = inputCurrency.replace(".", "");
 		outputCurrency = outputCurrency.replaceAll(",", ".");
@@ -143,10 +146,11 @@ public class Operations {
 	}
 
 	private static void welcomeBanner() {
-		System.out.println("\n\t\t\t _________________________________");
-		System.out.println("\t\t\t |                               |");
-		System.out.println("\t\t\t |   Welcome to the Boar Bank!   |");
-		System.out.println("\t\t\t |_______________________________|\n");
+		System.out.println("\n                \\\\\\\\\\\\\\_______________________________///////");
+		System.out.println("                 \\\\\\\\\\|                               |/////");
+		System.out.println("                  >>>>|   Welcome to the Boar Bank!   |<<<<");
+		System.out.println("                 /////|_______________________________|\\\\\\\\\\");
+		System.out.println("                ///////////////////|||||||\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\n");
 		System.out.println("\t       ___");
 		System.out.println("\t       ',_`\"\"\\        .---,");
 		System.out.println("\t          \\   :-\"\"``/`    |");
@@ -172,7 +176,26 @@ public class Operations {
 		System.out.println("\t                   |  |  |  |-._      '.           .'");
 		System.out.println("\t                   /  |  |  |__.`'---\"_;'-.     .-'");
 		System.out.println("\t                  //__/  /  |    .-'``     _.-'`");
-		System.out.println("\t                        //__/   //___.--''`\n");
+		System.out.println("\t                        //__/   //___.--''`\n\n");
+		System.out.println("           ___________________________________________________________");
+		System.out.println("           |                                                         |");
+		System.out.println("           |                   >>>  ATTENTION  <<<                   |");
+		System.out.println("           |                                                         |");
+		System.out.println("           |      Please make sure that the file containing the      |");
+		System.out.println("           |   accounts is allocated inside the project directory.   |");
+		System.out.println("           |_________________________________________________________|\n");
+	}
+
+	private static String inputFileName() {
+		System.out.print("\n\tInsert file name: ");
+		String input_file_name = input.next();
+		if (input_file_name.endsWith(".txt")) {
+			System.out.println("\n\tFile found!\n\tImporting accounts and info...");
+			return input_file_name;
+		} else {
+			System.out.println("\n\tERROR!\tFile name must end with '.txt'");
+			return inputFileName();
+		}
 	}
 
 	private static void mainMenu() {
